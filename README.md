@@ -6,8 +6,6 @@ RNAOmni trains models that map an RNA sequence to a biological label — **regre
 
 Workflow adapted from [autoresearch](https://github.com/karpathy/autoresearch): you mainly edit `program.md` (agent instructions); the agent modifies `train.py`.
 
-中文说明：[`使用说明.md`](使用说明.md)
-
 ## Task
 
 | | |
@@ -75,10 +73,6 @@ python prepare.py --compare-root /path/to/task
 python train.py
 ```
 
-### Optional pretrained features (Evo2, RNA-FM, …)
-
-Place weights under `tools/*/`, then enable them in `features/active.yaml`. Details: [`使用说明.md`](使用说明.md) and each `WEIGHTS.md`.
-
 ### Overnight agent search
 
 ```bash
@@ -92,6 +86,56 @@ Point a coding agent at the repo:
 ```
 Hi, have a look at program.md and let's kick off a new experiment! Let's do the setup first.
 ```
+
+## Pretrained weights (optional)
+
+Download only the features you enable. Paths are relative to the repo root. See each directory `WEIGHTS.md` / `PLACEHOLDER.md`. Binary weights are gitignored.
+
+### Evo2 (~13GB)
+
+Destination: `tools/Evo2/weights/evo2_7b.pt`
+
+```bash
+mkdir -p tools/Evo2/weights
+huggingface-cli download arcinstitute/evo2_7b evo2_7b.pt --local-dir tools/Evo2/weights
+```
+
+https://huggingface.co/arcinstitute/evo2_7b
+
+### Evo (~13GB)
+
+Destination: `tools/Evo/model/` (full Hugging Face model directory)
+
+```bash
+mkdir -p tools/Evo/model
+huggingface-cli download togethercomputer/evo-1-131k-base --local-dir tools/Evo/model
+```
+
+https://huggingface.co/togethercomputer/evo-1-131k-base
+
+### RNA-FM (~1.2GB)
+
+Destination: `tools/RNA-FM/pretrained/RNA-FM_pretrained.pth`
+
+```bash
+mkdir -p tools/RNA-FM/pretrained
+wget -O tools/RNA-FM/pretrained/RNA-FM_pretrained.pth \
+  "https://proj.cse.cuhk.edu.hk/rnafm/api/download?filename=RNA-FM_pretrained.pth"
+```
+
+### RiNALMo (micro ~128MB)
+
+Destination: `tools/RiNALMo/weights/rinalmo_micro_pretrained.pt`
+
+```bash
+mkdir -p tools/RiNALMo/weights
+wget -O tools/RiNALMo/weights/rinalmo_micro_pretrained.pt \
+  "https://zenodo.org/records/15043668/files/rinalmo_micro_pretrained.pt"
+```
+
+https://zenodo.org/records/15043668
+
+After placing weights, enable the feature in `features/active.yaml` (and disable `onehot` if desired). `evo` / `evo2` also need `transformers` and `flash_attn`. Features without weights: `onehot`, `length_frac`, `kmer`. Structure features (`struct_*`) need a local ViennaRNA install.
 
 ## Outputs
 
