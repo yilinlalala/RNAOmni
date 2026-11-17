@@ -11,10 +11,14 @@ Building strong RNA models still needs heavy manual design. AutoML mostly tunes 
 
 ## Quick start
 
-**Needs:** 1× NVIDIA GPU, Python 3.11, PyTorch (CUDA), NumPy, PyYAML. Conda env = `RNAOMNI_CONDA_ENV` (default `myenv3.11`). Optional: ViennaRNA (`struct_*`), `mmseqs` (classification splits). Default recipe is **`onehot_only`** (no weights).
+**Needs:** 1× NVIDIA GPU. Create the env from [`environment.yml`](environment.yml) (or [`requirements.txt`](requirements.txt)). Keep `RNAOMNI_CONDA_ENV` in `rnaomni.env` in sync (default `rnaomni`). Optional: ViennaRNA (`struct_*`), `mmseqs` (classification splits). Default recipe is **`onehot_only`** (no weights).
 
 ```bash
-conda activate myenv3.11
+conda env create -f environment.yml
+conda activate rnaomni
+# CUDA PyTorch for your GPU if needed, e.g.:
+# pip install torch --index-url https://download.pytorch.org/whl/cu128
+
 python prepare.py                 # demo: dataset/HEK_te_prediction_task.csv
 python train.py                   # or: TIME_BUDGET=60 python train.py
 grep -E '^val_spearman:|^test_RMSE:' workspace/run.log

@@ -21,7 +21,7 @@ Not copied: generation scripts, examples, `EVO_results/`, `streamer.py`.
 ## Zero-install
 
 ```bash
-# conda myenv3.11 already has torch / transformers / flash_attn
+# conda rnaomni already has torch / transformers / flash_attn
 ```
 
 Do not `pip install evo-model`. Do not download from HuggingFace.

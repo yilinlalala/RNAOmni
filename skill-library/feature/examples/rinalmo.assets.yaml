@@ -13,7 +13,7 @@ cost: high
 agent_tunable: []
 
 # conda env name (activate before smoke / deploy SDK)
-conda_env: myenv3.11
+conda_env: rnaomni
 
 # Upstream code. Zero-install: PYTHONPATH=<code_root>
 # CLI override: --code-root /abs/path/to/RiNALMo  (pass this for one-shot deploy)

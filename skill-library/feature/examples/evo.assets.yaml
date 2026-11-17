@@ -10,7 +10,7 @@ cache_key: evo_v1
 cost: high
 agent_tunable: []
 
-conda_env: myenv3.11
+conda_env: rnaomni
 
 # Upstream encode-only tree. Zero-install: PYTHONPATH=<repo>/<code_root>
 code_root: tools/Evo

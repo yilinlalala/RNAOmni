@@ -1,0 +1,16 @@
+# Core deps for RNAOmni (demo / onehot). Prefer: conda env create -f environment.yml
+# Then install a CUDA PyTorch build for your GPU, e.g.:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+
+numpy>=1.24,<2
+PyYAML>=6
+pandas>=2
+scipy>=1.10
+torch
+
+# Optional (enable matching features in features/active.yaml):
+# ViennaRNA          # struct_*  — or: conda install -c bioconda viennarna
+# transformers       # evo
+# flash-attn         # evo / evo2
+# ml_collections     # rinalmo
+# biopython          # some vendor tools

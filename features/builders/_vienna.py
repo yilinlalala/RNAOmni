@@ -55,7 +55,7 @@ def _import_rna():
     except ImportError as exc:
         raise ImportError(
             "ViennaRNA Python bindings required for L3 structure features "
-            "(conda/pip package providing `import RNA`). Env: myenv3.11."
+            "(conda/pip package providing `import RNA`). Env: rnaomni."
         ) from exc
     return RNA
 

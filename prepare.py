@@ -25,7 +25,7 @@ Dataset route (see rnaomni.env; local overlay `.env`):
   Resolution: apply_dataset_route() at import (after load_user_env) and CLI.
     Disk files under the default compare dir do not auto-hijack the main route.
 
-Usage (conda myenv3.11):
+Usage (conda rnaomni):
     python prepare.py
     python prepare.py --csv Rfam_88families_classification.csv
     python prepare.py --compare-root dataset/forcompare/Class_88fam_200%noise

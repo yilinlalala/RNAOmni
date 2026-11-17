@@ -13,7 +13,7 @@
 | D3 / D4 | `SMOKE_OK` / `BUILDER_SMOKE_OK` |
 | C3 train smoke | n=256, steps=40; encode≈17s; val_RMSE≈0.34; peak_vram≈279 MB |
 | Overnight (C4) | **Allowed** to toggle `rinalmo.enabled` (same as other registered features; tunable surface is recipe `enabled`) |
-| Env | `myenv3.11` |
+| Env | `rnaomni` |
 | Weight | `tools/RiNALMo/weights/rinalmo_micro_pretrained.pt` (registry `default_params.model_path`) |
 
 ## How the agent uses this
@@ -29,7 +29,7 @@ Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section). SSOT: todolist
 ## Redo checks
 
 ```bash
-conda activate myenv3.11
+conda activate rnaomni
 # place weights per README, then:
 python prepare.py
 python train.py

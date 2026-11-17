@@ -22,7 +22,7 @@ Not copied: generation scripts, examples, `EVO2_results*`, vortex tests / CUDA `
 ## Zero-install
 
 ```bash
-# conda myenv3.11: torch / flash_attn. Transformer Engine not required for 7B
+# conda rnaomni: torch / flash_attn. Transformer Engine not required for 7B
 # (Evo2 disables FP8 when TE is missing).
 ```
 

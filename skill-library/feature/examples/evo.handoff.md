@@ -14,7 +14,7 @@
 | Encode (HEK unique 9619 / 14410 rows) | ~506 s (includes load); peak VRAM ~12.4 GB (C2) |
 | Train smoke (C3) | n=256, steps=40; encode≈98 s; val_RMSE≈0.276; peak_vram≈13.3 GB |
 | Overnight (C4) | **Allowed** to toggle `evo.enabled` (same as other registered L4; tunable surface is `enabled` only) |
-| Env | `myenv3.11` (requires `flash_attn`) |
+| Env | `rnaomni` (requires `flash_attn`) |
 | Weight | `tools/Evo/model` (hardlinked from original dir) |
 
 ## How the agent uses this
@@ -30,7 +30,7 @@ Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section).
 ## Redo checks
 
 ```bash
-conda activate myenv3.11
+conda activate rnaomni
 # place weights per README, then:
 python prepare.py
 python train.py

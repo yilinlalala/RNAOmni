@@ -2,7 +2,7 @@
 
 > Under `rnaomni-feature`. 
 > **Agent open:** all three are already in `features/registry.yaml` and `features/active.yaml`; overnight may change `enabled` via the whitelist (no separate `agent_open` field). 
-> Env: `myenv3.11` (`import RNA` / ViennaRNA). Does not depend on CLI `RNAfold`.
+> Env: `rnaomni` (`import RNA` / ViennaRNA). Does not depend on CLI `RNAfold`.
 ## Information → channels
 
 | Registry name | Information | Shape convention | dim | agent |
@@ -34,7 +34,7 @@ Example recipe: `examples/active.with_struct_thermo.yaml`
 ## Acceptance quick check (human)
 
 ```bash
-conda activate myenv3.11
+conda activate rnaomni
 # enable struct_* in features/active.yaml, then:
 python prepare.py
 python train.py

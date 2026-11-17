@@ -13,7 +13,7 @@
 | Encode (full 14410) | ~81 s; peak encode VRAM ~460 MB (C2) |
 | Train smoke (C3) | val_RMSE≈0.907; train≈295 s; peak_vram≈873 MB; no OOM |
 | Overnight (C4) | **Allowed** to toggle `rna_fm.enabled` normally (same as other registered features) |
-| Env | `myenv3.11` |
+| Env | `rnaomni` |
 | Weight | `tools/RNA-FM/pretrained/RNA-FM_pretrained.pth` (registry `default_params.model_path`) |
 
 ## How the agent uses this
@@ -29,7 +29,7 @@ Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section). SSOT: todolist
 ## Redo checks
 
 ```bash
-conda activate myenv3.11
+conda activate rnaomni
 # place weights per README, then:
 python prepare.py
 python train.py

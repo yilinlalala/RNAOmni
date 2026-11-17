@@ -11,7 +11,7 @@ Online / local **share** the hits directory; sequences with `status=ok` are skip
 ## A. Install PyHMMER
 
 ```bash
-conda activate myenv3.11
+conda activate rnaomni
 conda install -c conda-forge pyhmmer
 python -c "import pyhmmer; print(pyhmmer.__version__)"
 ```
@@ -34,7 +34,7 @@ Notes: https://www.rnacentral.org/help/ftp
 ## C. Local search usage
 
 ```bash
-conda activate myenv3.11
+conda activate rnaomni
 cd /path/to/RNAOmni_v1
 
 # Same dataset dir as online; already-searched hashes are skipped

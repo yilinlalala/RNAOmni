@@ -247,7 +247,7 @@ class HyenaInferenceEngine:
                 #     activations_logger.info(f"k_diff: {k_diff.max()}, {k_diff.mean()}")
                 #     activations_logger.info(f"v_diff: {v_diff.max()}, {v_diff.mean()}")
 
-                #     h_savanna = torch.load(f"/home/zymrael/checkpoints/evo2/activations/savanna/hyena_filter_{self.layer_idx}.pt")
+                #     h_savanna = torch.load(f"/path/to/checkpoints/hyena_filter_{self.layer_idx}.pt")
                 #     h_diff = (weight[..., :h_savanna.shape[-1]].squeeze() - h_savanna.squeeze()).abs()
 
                 #     activations_logger.info(f"h_diff: {h_diff.max()}, {h_diff.mean()}")
@@ -371,7 +371,7 @@ class HyenaInferenceEngine:
             #     activations_logger.info(f"k_diff: {k_diff.max()}, {k_diff.mean()}")
             #     activations_logger.info(f"v_diff: {v_diff.max()}, {v_diff.mean()}")
 
-            #     h_savanna = torch.load(f"/home/zymrael/checkpoints/evo2/activations/savanna/hyena_filter_{self.layer_idx}.pt")
+            #     h_savanna = torch.load(f"/path/to/checkpoints/hyena_filter_{self.layer_idx}.pt")
 
             #     h_diff = (h[..., :h_savanna.shape[-1]].squeeze() - h_savanna.squeeze()).abs()
             #     activations_logger.info(f"h_diff: {h_diff.max()}, {h_diff.mean()}")

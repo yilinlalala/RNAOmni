@@ -132,7 +132,7 @@ def build_prompt(
         skill_block=skill_block,
         feature_name=feature_name,
         conda_env=assets.get("conda_env")
-        or os.environ.get("RNAOMNI_CONDA_ENV", "myenv3.11"),
+        or os.environ.get("RNAOMNI_CONDA_ENV", "rnaomni"),
         code_root=assets.get("code_root", str(code_abs)),
         code_root_abs=str(code_abs),
         weight_path=str(weight),

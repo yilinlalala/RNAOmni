@@ -1,6 +1,6 @@
 """
 RNAOmni training script. Single-GPU, single-file.
-Usage: python train.py  # conda myenv3.11; uv: uv run train.py
+Usage: python train.py  # conda rnaomni; uv: uv run train.py
 
 Search baseline (iter 1): PooledMLP on s1_l0_onehot (onehot, input_dim from recipe).
 

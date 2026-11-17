@@ -11,7 +11,7 @@ cost: high
 agent_tunable: [repr_layer]
 
 # conda env name (activate before smoke / deploy SDK)
-conda_env: myenv3.11
+conda_env: rnaomni
 
 # Upstream code (repo-relative). Zero-install: PYTHONPATH=<repo>/<code_root>
 code_root: tools/RNA-FM
@@ -29,7 +29,7 @@ smoke_device: cuda
 smoke_torch: 2.7.1+cu128
 smoke_model_path: tools/RNA-FM/pretrained/RNA-FM_pretrained.pth
 smoke_notes: >-
-  Zero-install OK on myenv3.11. Workarounds (keep in builder D4):
+  Zero-install OK on rnaomni. Workarounds (keep in builder D4):
   (1) stub sys.modules['ptflops'] before import fm (downstream FLOPs only);
   (2) torch.load(..., weights_only=False) for trusted local ckpt under torch>=2.6.
   D4: features/builders/rna_fm.py registered; recipe enabled:false.

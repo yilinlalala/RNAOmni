@@ -16,7 +16,7 @@ Deploy **does not** = turn on `enabled`, full training, change overnight prompts
 ## Trigger (parameterized one-shot)
 
 ```bash
-conda activate myenv3.11
+conda activate rnaomni
 cd /path/to/RNAOmni_v1
 export CURSOR_API_KEY=... # required unless --dry-run
 
@@ -50,7 +50,7 @@ Authoritative list: [`examples/rinalmo.assets.yaml`](examples/rinalmo.assets.yam
 | Key | Convention |
 |----|------|
 | `feature_name` / `module` | `rinalmo` / `features.builders.rinalmo` |
-| `conda_env` | `myenv3.11` |
+| `conda_env` | `rnaomni` |
 | `code_root` | `tools/RiNALMo`; CLI `--code-root` overrides |
 | `package_dir` | `rinalmo` |
 | Weight location | `{code_root}/weights/` (official README) |
@@ -77,7 +77,7 @@ Authoritative list: [`examples/rna_fm.assets.yaml`](examples/rna_fm.assets.yaml)
 | Key | Frozen value |
 |----|--------|
 | `feature_name` / `module` | `rna_fm` / `features.builders.rna_fm` |
-| `conda_env` | `myenv3.11` |
+| `conda_env` | `rnaomni` |
 | `code_root` | `tools/RNA-FM` (`PYTHONPATH=<repo>/tools/RNA-FM`) |
 | `expected_dim_doc` | `640` (doc hint; **registry.dim follows D3 smoke**) |
 | `repr_layer` | `12` |
@@ -125,7 +125,7 @@ Parallel worktrees: `parallel_lanes.provision_batch` symlinks these two director
 ## Execution checklist (D3–D5)
 
 1. Read the matching `*.assets.yaml`; confirm `code_root` and one `weight_candidates` path exist. 
-2. `conda activate myenv3.11`; confirm local weights under `{code_root}`.
+2. `conda activate rnaomni`; confirm local weights under `{code_root}`.
 
 3. **D3:** Record true `dim` / device / `model_path` (registry.dim follows smoke). 
 4. **D4:** builder + registry + recipe `enabled: false`. 

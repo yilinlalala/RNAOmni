@@ -391,7 +391,7 @@ def main() -> int:
         if hits_code == 2:
             print(
                 "ERROR: hits stage could not start (dependency/DB). "
-                "Not running profiles. Activate conda myenv3.11 and check "
+                "Not running profiles. Activate conda rnaomni and check "
                 "artifacts/msa_dbs/<db_id>/seqs.fasta",
                 file=sys.stderr,
             )

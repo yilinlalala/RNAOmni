@@ -10,7 +10,7 @@ cache_key: evo2_v1
 cost: high
 agent_tunable: []
 
-conda_env: myenv3.11
+conda_env: rnaomni
 
 code_root: tools/Evo2
 package_dir: evo2
