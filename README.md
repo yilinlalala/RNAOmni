@@ -4,8 +4,6 @@ An end-to-end autonomous modeling agent for RNA downstream prediction tasks.
 
 Building strong RNA models still needs heavy manual design. AutoML mostly tunes hyperparameters in fixed spaces, and LLM agents often rely on human blueprints. **RNAOmni** starts from raw data and jointly searches data processing, features, backbones, and hyperparameters (*Direct* / *Thinking* modes). On **17** tasks, it gains **59.50%** over AutoML and **18.4%** over AI research agents on average.
 
-Research loop (adapted from [autoresearch](https://github.com/karpathy/autoresearch)): edit `program.md`; the agent edits `train.py`. No inference CLI/API yet.
-
 | | |
 | --- | --- |
 | **Input / output** | RNA sequence → regression or classification label |
