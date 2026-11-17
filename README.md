@@ -6,7 +6,7 @@ RNAOmni trains models that map an RNA sequence to a biological label — **regre
 
 Workflow adapted from [autoresearch](https://github.com/karpathy/autoresearch): you mainly edit `program.md` (agent instructions); the agent modifies `train.py`.
 
-中文说明：[`使用说明.md`](使用说明.md) · 参数表：[`docs/RNAOmni_setup.md`](docs/RNAOmni_setup.md)
+中文说明：[`使用说明.md`](使用说明.md)
 
 ## Task
 
