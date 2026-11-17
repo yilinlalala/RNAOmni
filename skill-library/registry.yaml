@@ -1,0 +1,26 @@
+# RNAOmni skill registration (SSOT for launchers).
+# Cursor IDE symlink under .cursor/skills/ is optional and NOT the registry.
+#
+# version: bump when schema changes
+# skills[].id: stable skill id
+# skills[].path: repo-relative path to SKILL.md
+# skills[].overnight: include in overnight / orchestrator prompt injection
+# skills[].enabled: if false, ignored by all resolvers
+# skills[].triggers: hint strings for humans / future routers
+
+version: 1
+
+skills:
+  - id: rnaomni-feature
+    path: skill-library/feature/SKILL.md
+    enabled: true
+    overnight: true
+    description: >-
+      Human-controlled RNA features; agent may edit recipe whitelist and train.py only.
+    triggers:
+      - feature
+      - recipe
+      - prepare
+      - INPUT_DIM
+      - pretrained
+      - orchestrator

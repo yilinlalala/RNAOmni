@@ -1,0 +1,8 @@
+# Example: S1 acceptance B — input_dim 5
+recipe_id: l0_plus_length_frac
+fusion: concat
+features:
+  - name: onehot
+    enabled: true
+  - name: length_frac
+    enabled: true

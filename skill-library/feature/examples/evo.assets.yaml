@@ -1,0 +1,61 @@
+# Evo L4 资产约定（encode-only vendor，代替 deploy_feature 流程）
+#
+# 代码/权重：tools/Evo（encode-only vendor copy of upstream Evo）。
+# 只认本地路径；禁止 hub 下载。
+
+feature_name: evo
+layer: L4
+module: features.builders.evo
+cache_key: evo_v1
+cost: high
+agent_tunable: []
+
+conda_env: myenv3.11
+
+# Upstream encode-only tree. Zero-install: PYTHONPATH=<repo>/<code_root>
+code_root: tools/Evo
+package_dir: evo
+
+# evo-1-131k-base hidden_size (registry.dim 以 D3 冒烟为准)
+expected_dim_doc: 4096
+
+# --- D3 smoke ---
+# Command: PYTHONPATH=tools/Evo python tools/smoke_evo.py
+# Result: artifacts/pretrained/evo/smoke_result.json
+smoke_status: ok
+smoke_dim: 4096
+smoke_device: cuda
+smoke_torch: 2.7.1+cu128
+smoke_model_path: tools/Evo/model
+smoke_notes: >-
+  Local HF dir tools/Evo/model (evo-1-131k-base shards, hardlinked).
+  Hidden states after final RMSNorm, dim=4096. DNA tokenizer (U→T).
+  Needs flash_attn (AttentionBlock). Do not pip-install evo-model.
+  C2 HEK unique 9619 encode ~506s peak VRAM ~12.4GB.
+  C3 onehot+evo n=256 train smoke ok; C4 overnight toggle allowed.
+smoke_notes: >-
+  Local HF dir tools/Evo/model (evo-1-131k-base shards, hardlinked).
+  Hidden states after final RMSNorm, dim=4096. DNA tokenizer (U→T).
+  Needs flash_attn (AttentionBlock). Do not pip-install evo-model.
+
+weight_candidates:
+  - path: tools/Evo/model
+    note: local HF dir (config.json + safetensors index)
+
+default_params_keys:
+  - model_path   # HF dir, not a single file
+  - device
+  - batch_size
+
+deps_hard_hint:
+  - torch
+  - numpy
+  - transformers
+  - flash_attn
+deps_optional_ignore_if_unused:
+  - stripedhyena
+  - triton
+
+recipe_placeholder:
+  name: evo
+  enabled: false

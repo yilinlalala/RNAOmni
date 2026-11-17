@@ -1,0 +1,17 @@
+# Example: L0 + L3 struct_thermo (input_dim = 4 + 3 = 7 if only these two)
+# Prefer enabling one L3 feature per overnight round.
+recipe_id: l0_plus_struct_thermo
+fusion: concat
+features:
+  - name: onehot
+    enabled: true
+  - name: length_frac
+    enabled: false
+  - name: kmer
+    enabled: false
+  - name: struct_thermo
+    enabled: true
+  - name: struct_dotbracket
+    enabled: false
+  - name: struct_bpp
+    enabled: false

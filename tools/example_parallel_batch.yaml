@@ -1,0 +1,17 @@
+# Optional: start several jobs in one process. Everyday use is one submit
+# per terminal. Default GPU is 0; set CUDA_VISIBLE_DEVICES to use other cards.
+#   python -m rnaomni.parallel --compare-root dataset/forcompare/Class_88fam_0%noise
+#
+# dashboard.tsv is a status panel, not a cross-dataset leaderboard.
+# Running-lane cap: RNAOMNI_MAX_RUNNING_LANES (default 2). 0 = unlimited.
+# --no-wait refuses when the cap is full instead of waiting.
+
+batch_id: example_d0
+gpus: [0, 1]
+lanes:
+  - dataset_id: cls_200noise
+    compare_root: dataset/forcompare/Class_88fam_200%noise
+    explore: true
+  - dataset_id: cls_0noise
+    compare_root: dataset/forcompare/Class_88fam_0%noise
+    explore: true

@@ -1,0 +1,53 @@
+# Evo2 L4 资产约定（encode-only vendor）
+#
+# 代码/权重：tools/Evo2（从 evo2-main 复制编码所需部分）。
+# 只认本地路径；禁止 hub 下载。
+
+feature_name: evo2
+layer: L4
+module: features.builders.evo2
+cache_key: evo2_v1
+cost: high
+agent_tunable: []
+
+conda_env: myenv3.11
+
+code_root: tools/Evo2
+package_dir: evo2
+
+expected_dim_doc: 4096
+model_name: evo2_7b
+
+smoke_status: ok
+smoke_dim: 4096
+smoke_device: cuda
+smoke_torch: 2.7.1+cu128
+smoke_model_path: tools/Evo2/weights/evo2_7b.pt
+smoke_notes: >-
+  Local evo2_7b.pt (hardlinked). Hidden states from final RMSNorm, dim=4096.
+  DNA tokenizer (U→T). 7B runs without Transformer Engine (FP8 disabled).
+  C2 HEK unique 9619 encode ~430s peak VRAM ~12.7GB.
+  C3 onehot+evo2 n=256 train smoke ok; C4 overnight toggle allowed.
+
+weight_candidates:
+  - path: tools/Evo2/weights/evo2_7b.pt
+    note: local 7B checkpoint
+
+default_params_keys:
+  - model_path
+  - model_name
+  - device
+  - batch_size
+
+deps_hard_hint:
+  - torch
+  - numpy
+  - flash_attn
+deps_optional_ignore_if_unused:
+  - transformer_engine
+  - huggingface_hub
+  - biopython
+
+recipe_placeholder:
+  name: evo2
+  enabled: false

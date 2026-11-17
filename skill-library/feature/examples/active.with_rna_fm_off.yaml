@@ -1,0 +1,14 @@
+# Example: rna_fm registered but off（Deploy 默认态）。
+# Call（C4）已完成：夜间允许按需打开；本文件仅作「默认关闭」示例。
+
+recipe_id: example_rna_fm_off
+fusion: concat
+features:
+  - name: onehot
+    enabled: true
+  - name: length_frac
+    enabled: true
+  - name: kmer
+    enabled: false
+  - name: rna_fm
+    enabled: false

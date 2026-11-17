@@ -1,0 +1,8 @@
+# Example: L0 only (matches default features/active.yaml)
+recipe_id: default_l0
+fusion: concat
+features:
+  - name: onehot
+    enabled: true
+  - name: length_frac
+    enabled: false

@@ -1,0 +1,82 @@
+# S2b-Deploy：第二模 RiNALMo 资产约定（冻结）
+#
+# Deploy / 冒烟与注册必须读本文件。大权重不进 git。
+# 权重落点：官方 README Installation §3 → `{code_root}/weights/`
+# 本地优先：只解析已存在文件；禁止 gdown / Zenodo / hub 自动下载。
+# 规程对齐：skill-library/feature/deploy-ops.md（RNA-FM 同款竖切）
+
+feature_name: rinalmo
+layer: L4
+module: features.builders.rinalmo
+cache_key: rinalmo_v1
+cost: high
+agent_tunable: []
+
+# conda env name (activate before smoke / deploy SDK)
+conda_env: myenv3.11
+
+# Upstream code. Zero-install: PYTHONPATH=<code_root>
+# CLI override: --code-root /abs/path/to/RiNALMo  （一键部署传入参数）
+code_root: tools/RiNALMo
+package_dir: rinalmo
+
+# README pretrained scale → embed_dim（registry.dim 以冒烟为准）
+#   micro 35M → 480
+#   mega  150M → 640
+#   giga  650M → 1280
+# 默认解析策略：在 weight_candidates 中取【第一个已存在】的文件（列表已按体积从小到大排）。
+default_weight_policy: smallest_present
+expected_dim_doc: 480
+lm_config: micro
+
+# --- D3 smoke（部署后填写）---
+# Command: PYTHONPATH=<code_root> python tools/smoke_rinalmo.py --code-root <code_root>
+# Result: artifacts/pretrained/rinalmo/smoke_result.json
+smoke_status: pending
+smoke_dim: null
+smoke_device: null
+smoke_torch: null
+smoke_model_path: null
+smoke_notes: >-
+  Zero-install: PYTHONPATH=tools/RiNALMo (or --code-root).
+  Load via model_config(lm_config)+load_state_dict(local .pt); never get_pretrained_model()
+  (that path calls gdown). torch>=2.6: trusted local ckpt may need weights_only=False.
+  Default use_flash_attn=false; flash_attn is lazy-imported in attention.py.
+
+# Local weights only — resolve in order; first existing file wins.
+# Paths relative to code_root unless absolute. README layout: weights/*.pt
+weight_candidates:
+  - path: weights/rinalmo_micro_pretrained.pt
+    lm_config: micro
+    expected_dim: 480
+    note: "smallest (35M); default when present"
+  - path: weights/rinalmo_mega_pretrained.pt
+    lm_config: mega
+    expected_dim: 640
+    note: "medium (150M)"
+  - path: weights/rinalmo_giga_pretrained.pt
+    lm_config: giga
+    expected_dim: 1280
+    note: "largest (650M); smoke dim=1280 only if this is the resolved file"
+
+# registry default_params keys locked at register time (D4)
+default_params_keys:
+  - model_path   # absolute path of the resolved weight at register time
+  - lm_config    # micro | mega | giga；须与权重文件一致
+  - code_root
+  - device       # e.g. cuda or cpu
+  - use_flash_attn
+
+deps_hard_hint:
+  - torch
+  - numpy
+  - ml_collections
+deps_optional_ignore_if_unused:
+  - flash-attn
+  - lightning
+  - wandb
+  - gdown
+
+recipe_placeholder:
+  name: rinalmo
+  enabled: false

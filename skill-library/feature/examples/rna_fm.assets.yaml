@@ -1,0 +1,64 @@
+# S2b-Deploy D1：首模 RNA-FM 资产约定（冻结）
+#
+# Deploy / D3+ 冒烟与注册必须读本文件。权重在 tools/RNA-FM/pretrained/。
+# SSOT 规划：devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md
+# 规程：skill-library/feature/deploy-ops.md
+
+feature_name: rna_fm
+layer: L4
+module: features.builders.rna_fm
+cache_key: rna_fm_v1
+cost: high
+agent_tunable: [repr_layer]
+
+# conda env name (activate before smoke / deploy SDK)
+conda_env: myenv3.11
+
+# Upstream code (repo-relative). Zero-install: PYTHONPATH=<repo>/<code_root>
+code_root: tools/RNA-FM
+
+# Official docs: 12 layers, 640-d hidden. Registry `dim` MUST be filled from D3 smoke,
+# not assumed — expected_dim_doc is a hint only.
+expected_dim_doc: 640
+repr_layer: 12
+
+# --- D3 smoke (2026-07-20) ---
+# Command: python tools/smoke_rna_fm.py
+# Result artifact: artifacts/pretrained/rna_fm/smoke_result.json
+smoke_status: ok
+smoke_dim: 640
+smoke_device: cuda
+smoke_torch: 2.7.1+cu128
+smoke_model_path: tools/RNA-FM/pretrained/RNA-FM_pretrained.pth
+smoke_notes: >-
+  Zero-install OK on myenv3.11. Workarounds (keep in builder D4):
+  (1) stub sys.modules['ptflops'] before import fm (downstream FLOPs only);
+  (2) torch.load(..., weights_only=False) for trusted local ckpt under torch>=2.6.
+  D4: features/builders/rna_fm.py registered; recipe enabled:false.
+  D5: see examples/rna_fm.handoff.md
+
+# Local weights only — never call rna_fm_t12() without a path on offline hosts.
+# Resolve in order; first existing file wins.
+weight_candidates:
+  - path: tools/RNA-FM/pretrained/RNA-FM_pretrained.pth
+    note: upstream README pretrained/ folder (repo-local)
+
+# registry default_params keys locked at register time (D4)
+default_params_keys:
+  - model_path   # absolute path of the resolved weight file at register time
+  - repr_layer   # int; default 12
+  - device       # e.g. cuda or cpu; set at smoke / register
+
+# Hard runtime deps for Embedding path (soft: omit if smoke does not import them)
+# Missing -> stop and ask human; cite tools/RNA-FM/setup.py + environment.yml
+deps_hard_hint:
+  - torch
+  - numpy
+deps_optional_ignore_if_unused:
+  - ptflops
+  - hydra-core
+  - omegaconf
+
+recipe_placeholder:
+  name: rna_fm
+  enabled: false

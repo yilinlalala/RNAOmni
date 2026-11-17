@@ -1,0 +1,136 @@
+# Human-maintained feature catalog (NOT skill-library/registry.yaml).
+# Agent must not edit this file.
+
+version: 1
+
+features:
+  - name: onehot
+    layer: L0
+    dim: 4
+    cost: low
+    deps: []
+    cache_key: onehot_v1
+    module: features.builders.onehot
+    default_params: {}
+    agent_tunable: []
+
+  - name: length_frac
+    layer: L1
+    dim: 1
+    cost: low
+    deps: []
+    cache_key: length_frac_v1
+    module: features.builders.length_frac
+    default_params: {}
+    agent_tunable: []
+    notes: "S1 acceptance second channel; toggle via features/active.yaml"
+
+  - name: kmer
+    layer: L2
+    dim: 64  # documentation for default k=3; encode uses C=4^k from params.k
+    cost: low
+    deps: []
+    cache_key: kmer_k3_v1
+    module: features.builders.kmer
+    default_params:
+      k: 3
+    agent_tunable: [k]
+    notes: "Position-wise k-mer one-hot; recipe may overlay params.k in 1..4 (C=4^k)"
+
+  - name: struct_thermo
+    layer: L3
+    dim: 3
+    cost: medium
+    deps: [ViennaRNA]
+    cache_key: struct_thermo_v1
+    module: features.builders.struct_thermo
+    default_params: {}
+    agent_tunable: []
+    notes: "MFE/L, ensemble gap, mean positional entropy (broadcast)"
+
+  - name: struct_dotbracket
+    layer: L3
+    dim: 3
+    cost: medium
+    deps: [ViennaRNA]
+    cache_key: struct_dotbracket_v1
+    module: features.builders.struct_dotbracket
+    default_params: {}
+    agent_tunable: []
+    notes: "MFE dot-bracket one-hot: ( ) ."
+
+  - name: struct_bpp
+    layer: L3
+    dim: 2
+    cost: medium
+    deps: [ViennaRNA]
+    cache_key: struct_bpp_v1
+    module: features.builders.struct_bpp
+    default_params: {}
+    agent_tunable: []
+    notes: "Pairing probability + positional entropy from PF"
+
+  - name: rna_fm
+    layer: L4
+    dim: 640
+    cost: high
+    deps: [torch]
+    cache_key: rna_fm_v1
+    module: features.builders.rna_fm
+    default_params:
+      model_path: tools/RNA-FM/pretrained/RNA-FM_pretrained.pth
+      repr_layer: 12
+      device: cuda
+    agent_tunable: [repr_layer]
+    notes: "RNA-FM token embeddings; local ckpt only. Recipe may overlay params.repr_layer in 0..12 (default 12)."
+
+  - name: rinalmo
+    layer: L4
+    dim: 480
+    cost: high
+    deps: [torch, ml_collections]
+    cache_key: rinalmo_v1
+    module: features.builders.rinalmo
+    default_params:
+      model_path: tools/RiNALMo/weights/rinalmo_micro_pretrained.pt
+      lm_config: micro
+      code_root: tools/RiNALMo
+      device: cuda
+      use_flash_attn: auto
+    agent_tunable: []
+    notes: "RiNALMo micro (480-d); local weights only — no gdown. Campaign pin: do not switch scale."
+
+  - name: evo
+    layer: L4
+    dim: 4096
+    cost: high
+    deps: [torch, transformers, flash_attn]
+    cache_key: evo_v1
+    module: features.builders.evo
+    default_params:
+      model_path: tools/Evo/model
+      code_root: tools/Evo
+      device: cuda
+      batch_size: 64
+    agent_tunable: []
+    notes: "Evo-1-131k hidden states (4096-d); local HF dir only — no hub. Stacking on a working L4 in full is illegal."
+    heavy: true
+    vram_gb: 12
+
+  - name: evo2
+    layer: L4
+    dim: 4096
+    cost: high
+    deps: [torch, flash_attn]
+    cache_key: evo2_v1
+    module: features.builders.evo2
+    default_params:
+      model_path: tools/Evo2/weights/evo2_7b.pt
+      model_name: evo2_7b
+      code_root: tools/Evo2
+      device: cuda
+      batch_size: 64
+    agent_tunable: []
+    notes: "Evo2-7B hidden states (4096-d); local evo2_7b.pt only — no hub. Stacking on a working L4 in full is illegal."
+    heavy: true
+    vram_gb: 12

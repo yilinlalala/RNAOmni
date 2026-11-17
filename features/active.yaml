@@ -1,0 +1,27 @@
+# Active feature recipe — agent may edit WHITELIST keys only (see registry-spec).
+# Default for GitHub/demo: onehot only (no pretrained weights required).
+# Enable evo2 (or other L4) after placing weights under tools/*/ — see WEIGHTS.md.
+
+recipe_id: onehot_only
+fusion: concat
+features:
+  - name: onehot
+    enabled: true
+  - name: length_frac
+    enabled: false
+  - name: kmer
+    enabled: false
+  - name: struct_thermo
+    enabled: false
+  - name: struct_dotbracket
+    enabled: false
+  - name: struct_bpp
+    enabled: false
+  - name: rna_fm
+    enabled: false
+  - name: rinalmo
+    enabled: false
+  - name: evo
+    enabled: false
+  - name: evo2
+    enabled: false

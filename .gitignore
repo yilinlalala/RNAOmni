@@ -1,0 +1,60 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+worktrees/
+.parallel/
+workspace/
+results/   # legacy name; runtime outputs now under workspace/
+queue/
+
+# Agent prompt files (generated per-session by launchers)
+CLAUDE.md
+AGENTS.md
+
+# Experimental code/artifacts
+dev/
+
+# Results file
+results.tsv
+orchestrator_state.json
+
+# Logs
+run.log
+*.log
+
+# Local overlay for rnaomni.env (secrets + campaign overrides)
+.env
+.env.local
+
+# Dataset cache / non-CSV blobs (do not ship in git)
+dataset/.cache/
+dataset/*.RDa
+dataset/*.rda
+*.RData
+
+# Runtime artifacts / caches / MSA hits
+artifacts/
+
+# Pretrained weight binaries (placeholders/WEIGHTS.md are kept)
+*.pth
+*.pt
+*.safetensors
+*.bin
+*.ckpt
+*.gguf
+tools/RNA-FM/docs/
+tools/RNA-FM/redevelop/
+tools/RNA-FM/tutorials/
+tools/evo2/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
