@@ -66,12 +66,7 @@ mkdir -p "$CODE_ROOT/weights"
 # wget .../rinalmo_micro_pretrained.pt -O "$CODE_ROOT/weights/rinalmo_micro_pretrained.pt"
 ```
 
-Smoke:
-
-```bash
-PYTHONPATH="$CODE_ROOT" python tools/smoke_rinalmo.py --code-root "$CODE_ROOT"
-python tools/smoke_rinalmo_builder.py --feature-name rinalmo
-```
+Validate with `python prepare.py` / `python train.py` after weights are in place.
 
 Handoff: [`examples/rinalmo.handoff.md`](examples/rinalmo.handoff.md).
 
@@ -97,14 +92,14 @@ cp RNA-FM_pretrained.pth tools/RNA-FM/pretrained/RNA-FM_pretrained.pth
 ```
 
 On register, write the **resolved absolute path** into `default_params.model_path`. 
-Parallel worktrees: `parallel_lanes.provision_batch` symlinks these two directories into the main repo (same approach as `dataset/forcompare`); overnight **forbids** wget / hub downloads. Smoke results stay under `artifacts/pretrained/` (ignored).
+Parallel worktrees: `parallel_lanes.provision_batch` symlinks these two directories into the main repo (same approach as `dataset/forcompare`); overnight **forbids** wget / hub downloads. Optional local check artifacts may live under `artifacts/pretrained/` (gitignored).
 
 ## Install and dependency policy
 
 1. **Default zero-install:** `PYTHONPATH=<code_root>`; do not `pip install` the whole package; do not rebuild the env from the official `environment.yml`. 
 2. Target is **Embedding** only; RiNALMo defaults to `use_flash_attn=false` (attention already lazily loads flash_attn). 
 3. **Missing libraries:** stop and talk to the user; may compare `{code_root}/environment.yml` / `setup.py`; do not install packages online on your own. 
-4. **Version skew:** if smoke passes, ignore official pins; if it fails, negotiate Plan B. 
+4. **Version skew:** if a short train passes, ignore official pins; if it fails, negotiate Plan B. 
 5. Weights: **local only**; forbid gdown / hub / Zenodo auto-download.
 
 ## Red lines
@@ -130,15 +125,10 @@ Parallel worktrees: `parallel_lanes.provision_batch` symlinks these two director
 ## Execution checklist (D3–D5)
 
 1. Read the matching `*.assets.yaml`; confirm `code_root` and one `weight_candidates` path exist. 
-2. `conda activate myenv3.11`; run smoke (RiNALMo example):
-
-```bash
-python tools/smoke_rinalmo.py --code-root <CODE_ROOT>
-# → artifacts/pretrained/rinalmo/smoke_result.json
-```
+2. `conda activate myenv3.11`; confirm local weights under `{code_root}`.
 
 3. **D3:** Record true `dim` / device / `model_path` (registry.dim follows smoke). 
-4. **D4:** builder + registry + recipe `enabled: false`; `python tools/smoke_rinalmo_builder.py`. 
+4. **D4:** builder + registry + recipe `enabled: false`. 
 5. **D5:** Write `examples/<feature>.handoff.md` (registered, default `enabled: false` → hand to Call to update C2–C4).
 
 ### D3 zero-install notes

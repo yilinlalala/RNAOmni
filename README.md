@@ -154,7 +154,7 @@ Runtime outputs go under **`workspace/`** (gitignored):
 dataset/          demo CSV
 features/         active recipe + feature builders
 rnaomni/          prepare helpers, orchestrator, parallel, finalize
-tools/            optional encoders + smoke scripts
+tools/            optional encoders (Evo2, RNA-FM, …)
 skill-library/    agent skill docs for features
 workspace/        runtime outputs (gitignored)
 artifacts/        prep caches (gitignored)

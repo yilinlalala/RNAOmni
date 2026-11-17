@@ -20,7 +20,6 @@ package_dir: evo
 expected_dim_doc: 4096
 
 # --- D3 smoke ---
-# Command: PYTHONPATH=tools/Evo python tools/smoke_evo.py
 # Result: artifacts/pretrained/evo/smoke_result.json
 smoke_status: ok
 smoke_dim: 4096

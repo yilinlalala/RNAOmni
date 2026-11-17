@@ -13,7 +13,7 @@
 7. Manually run `train.py` through. 
 8. Document (write examples / encoding notes if needed) before opening to overnight.
 
-L3 structure: [structure-encoding.md](structure-encoding.md); smoke: `python tools/smoke_struct_builders.py`.
+L3 structure: [structure-encoding.md](structure-encoding.md).
 
 ## L4 pretrained
 

@@ -31,8 +31,7 @@ Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section).
 
 ```bash
 conda activate myenv3.11
-PYTHONPATH=tools/Evo python tools/smoke_evo.py
-python tools/smoke_evo_builder.py
-CUDA_VISIBLE_DEVICES=3 python tools/smoke_evo_train.py --n 256 --steps 40
-CUDA_VISIBLE_DEVICES=3 python tools/bench_evo_encode.py --mode evo_only
+# place weights per README, then:
+python prepare.py
+python train.py
 ```

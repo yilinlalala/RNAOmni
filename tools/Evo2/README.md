@@ -24,8 +24,6 @@ Not copied: generation scripts, examples, `EVO2_results*`, vortex tests / CUDA `
 ```bash
 # conda myenv3.11: torch / flash_attn. Transformer Engine not required for 7B
 # (Evo2 disables FP8 when TE is missing).
-PYTHONPATH=tools/Evo2 python tools/smoke_evo2.py
-python tools/smoke_evo2_builder.py
 ```
 
 Do not `pip install evo2`. Do not download from HuggingFace.

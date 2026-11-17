@@ -22,8 +22,6 @@ Not copied: generation scripts, examples, `EVO_results/`, `streamer.py`.
 
 ```bash
 # conda myenv3.11 already has torch / transformers / flash_attn
-PYTHONPATH=tools/Evo python tools/smoke_evo.py
-python tools/smoke_evo_builder.py
 ```
 
 Do not `pip install evo-model`. Do not download from HuggingFace.

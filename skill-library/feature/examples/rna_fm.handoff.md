@@ -30,6 +30,7 @@ Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section). SSOT: todolist
 
 ```bash
 conda activate myenv3.11
-python tools/smoke_rna_fm_builder.py
-CUDA_VISIBLE_DEVICES=0 python tools/bench_rna_fm_encode.py --mode onehot_rna_fm
+# place weights per README, then:
+python prepare.py
+python train.py
 ```

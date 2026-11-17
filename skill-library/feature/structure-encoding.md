@@ -35,7 +35,9 @@ Example recipe: `examples/active.with_struct_thermo.yaml`
 
 ```bash
 conda activate myenv3.11
-python tools/smoke_struct_builders.py
+# enable struct_* in features/active.yaml, then:
+python prepare.py
+python train.py
 ```
 
 Full encoding is computed when `train.py` starts; L3 is slower than L0–L2—watch startup wall-clock (encoding is not counted in `TIME_BUDGET`, but still affects perceived latency).

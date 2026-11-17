@@ -22,7 +22,6 @@ expected_dim_doc: 640
 repr_layer: 12
 
 # --- D3 smoke (2026-07-20) ---
-# Command: python tools/smoke_rna_fm.py
 # Result artifact: artifacts/pretrained/rna_fm/smoke_result.json
 smoke_status: ok
 smoke_dim: 640

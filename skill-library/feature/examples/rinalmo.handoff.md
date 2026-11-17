@@ -30,9 +30,7 @@ Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section). SSOT: todolist
 
 ```bash
 conda activate myenv3.11
-cd /path/to/RNAOmni
-CODE_ROOT=/path/to/RNAOmni/tools/RiNALMo
-PYTHONPATH="$CODE_ROOT" python tools/smoke_rinalmo.py --code-root "$CODE_ROOT"
-python tools/smoke_rinalmo_builder.py --feature-name rinalmo
-python tools/smoke_rinalmo_train.py --n 256 --steps 40
+# place weights per README, then:
+python prepare.py
+python train.py
 ```

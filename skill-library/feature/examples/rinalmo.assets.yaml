@@ -30,7 +30,6 @@ expected_dim_doc: 480
 lm_config: micro
 
 # --- D3 smoke (fill after deploy) ---
-# Command: PYTHONPATH=<code_root> python tools/smoke_rinalmo.py --code-root <code_root>
 # Result: artifacts/pretrained/rinalmo/smoke_result.json
 smoke_status: pending
 smoke_dim: null
