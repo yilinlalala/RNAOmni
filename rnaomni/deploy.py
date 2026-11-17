@@ -56,15 +56,15 @@ Agent transport is only a vehicle. This is NOT orchestrator overnight mode.
 
 ## Mission
 Follow deploy-ops.md end-to-end for feature **{feature_name}**:
-1. Embedding smoke with **local** weight only (no download). Record real **dim** and device.
-   Suggested: `PYTHONPATH={code_root_abs} python tools/smoke_{feature_name}.py --code-root {code_root_abs}`
-2. If ImportError / missing hard dep / smoke fails: **STOP and ask the human**.
+1. Embedding check with **local** weight only (no download). Record real **dim** and device
+   (short Python snippet under `PYTHONPATH={code_root_abs}`, or enable the feature and run `prepare.py` / a short `train.py`).
+2. If ImportError / missing hard dep / check fails: **STOP and ask the human**.
    Cite `{code_root}/environment.yml` / setup files as suggestions only.
    Do **not** online `pip install` / `conda install` / hub / gdown without a local path.
-3. If smoke OK: write builder + registry L4 entry + features/active.yaml placeholder with **enabled: false**.
+3. If check OK: write builder + registry L4 entry + features/active.yaml placeholder with **enabled: false**.
    Lock `default_params.model_path` (absolute or repo-relative to the resolved file), `lm_config`, `device`.
-   Set `registry.dim` to smoked dim (update if user later switches micro/mega/giga).
-4. Re-smoke via builder; assert C == registry.dim.
+   Set `registry.dim` to measured dim (update if user later switches micro/mega/giga).
+4. Re-check via builder path; assert C == registry.dim.
 5. Write short handoff under skill-library/feature/examples/{feature_name}.handoff.md; STOP.
 
 ## Write whitelist (only these)
