@@ -553,10 +553,11 @@ def parse_prior(blob: dict[str, Any] | None) -> dict[str, Any]:
         for item in raw_s:
             token = str(item).strip().lower().replace("-", "_").replace(" ", "_")
             aliases = {
-                "组成": "composition",
-                "结构": "structure",
-                "长程": "long_range",
-                "样本量": "sample_size",
+                "composition": "composition",
+                "structure": "structure",
+                "long_range": "long_range",
+                "longrange": "long_range",
+                "sample_size": "sample_size",
                 "sample": "sample_size",
             }
             token = aliases.get(str(item).strip(), token)

@@ -1,39 +1,39 @@
-# MSA profile encoding（数据集绑定）
+# MSA profile encoding (dataset-bound)
 
-> **状态（2026-07-25）：半成品。** builder + `tools/msa_search/` + recipe 占位行已有；**尚未**写入 `features/registry.yaml` → 打开 `enabled` 会 `KeyError`。HEK 全量 hits/profiles 未覆盖。本地搜库作生产默认仍暂缓。  
-> 人控预计算；agent **当前不要**开关 `msa_profile`。阶段见 [`../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md`](../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md)。
+> **Status (2026-07-25): incomplete.** builder + `tools/msa_search/` + recipe placeholder rows exist; **not yet** written to `features/registry.yaml` → turning on `enabled` raises `KeyError`. HEK full hits/profiles not covered. Local search DB as production default remains deferred.  
+> Human-controlled precompute; agent **must not** toggle `msa_profile` for now. Stage: [`../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md`](../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md).
 
-## 与数据集 / 双后端
+## Dataset / dual backend
 
-| 概念 | 规则 |
+| Concept | Rule |
 |------|------|
 | `dataset_id` | `Path(csv).stem` |
-| 资产路径 | `artifacts/msa/<dataset_id>/`（**online 与 local 共用**） |
-| 跳过 | 已有 `hits/.../<hash>.json` 且 `status=ok` → 不重搜（`--force` 除外） |
-| 本地库 | `artifacts/msa_dbs/<db_id>/`（与数据集目录分离） |
-| 训练读取 | builder 默认用 `prepare.ACTIVE_CSV` 的 stem |
+| Asset path | `artifacts/msa/<dataset_id>/` (**shared by online and local**) |
+| Skip | Existing `hits/.../<hash>.json` with `status=ok` → do not re-search (unless `--force`) |
+| Local DB | `artifacts/msa_dbs/<db_id>/` (separate from dataset dirs) |
+| Training read | builder defaults to stem of `prepare.ACTIVE_CSV` |
 
-本地安装与下载：**[MANUAL_SETUP_LOCAL.md](../../tools/msa_search/MANUAL_SETUP_LOCAL.md)**（RNAcentral active + pyhmmer）。
+Local install and download: **[MANUAL_SETUP_LOCAL.md](../../tools/msa_search/MANUAL_SETUP_LOCAL.md)** (RNAcentral active + pyhmmer).
 
-## 闭环前须补
+## Required before closing the loop
 
-1. 在 `features/registry.yaml` 登记 `msa_profile`（dim=6、module、`default_params`）。  
-2. 人控跑满当前 `ACTIVE_CSV` 的 precompute（hits + profiles）。  
-3. 冒烟训通后再在 handoff/规程中开放夜间。
+1. Register `msa_profile` in `features/registry.yaml` (dim=6, module, `default_params`).  
+2. Human-run precompute for the current `ACTIVE_CSV` to completion (hits + profiles).  
+3. Smoke-train through, then open overnight in handoff/procedure.
 
-## 流程（上架完成后）
+## Flow (after listing is complete)
 
 ```bash
 python tools/msa_search/run_precompute.py --csv <active>.csv --stage all
-# registry 已登记后：recipe 打开 msa_profile → train（只读该 dataset 的 npy）
+# After registry registration: enable msa_profile in recipe → train (read-only npy for that dataset)
 ```
 
-## 通道（dim=6）
+## Channels (dim=6)
 
-`freq_A/C/G/U`, `conservation`, `gap_freq`（见 `contract.PROFILE_CHANNELS`）。
+`freq_A/C/G/U`, `conservation`, `gap_freq` (see `contract.PROFILE_CHANNELS`).
 
-## 红线
+## Red lines
 
-- Agent 不跑 precompute、不改 builder 源码。  
-- 缺 profile → builder 侧 `missing: zeros`（上架闭环后）。  
-- 不同 CSV **不得**共用同一 `artifacts/msa/<id>/`（除非确认序列集合相同且你有意为之）。
+- Agent does not run precompute or change builder source.  
+- Missing profile → builder-side `missing: zeros` (after listing loop is closed).  
+- Different CSVs **must not** share the same `artifacts/msa/<id>/` (unless you confirm the sequence set is identical and intend that).

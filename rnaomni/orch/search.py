@@ -89,8 +89,8 @@ def format_sample_description(
     )
     kept_s = "yes" if kept else "no"
     return (
-        f"[sample] 数据采样到 ×{scale_s}"
-        f"（K_train {int(old_k)}->{int(trial_k)}，K_eval={int(k_eval)}，kept={kept_s}）"
+        f"[sample] data sampled to ×{scale_s}"
+        f" (K_train {int(old_k)}->{int(trial_k)}, K_eval={int(k_eval)}, kept={kept_s})"
     )
 
 

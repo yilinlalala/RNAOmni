@@ -54,7 +54,7 @@ class DownStreamModule(nn.Module):
         """
         padding_masks = tokens.ne(self.pad_idx)
 
-        # remove eos token  （suffix first）
+        # remove eos token  (suffix first)
         if self.append_eos:     # default is right
             eos_masks = tokens.ne(self.eos_idx)
             eos_pad_masks = (eos_masks & padding_masks).to(seqs)
@@ -80,7 +80,7 @@ class DownStreamModule(nn.Module):
         """
         padding_masks = tokens.ne(self.pad_idx)
 
-        # remove eos token  （suffix first）
+        # remove eos token  (suffix first)
         if self.append_eos:  # default is right
             eos_masks = tokens.ne(self.eos_idx)
             eos_pad_masks = (eos_masks & padding_masks).to(maps)

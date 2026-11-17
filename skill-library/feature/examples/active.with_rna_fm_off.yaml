@@ -1,5 +1,5 @@
-# Example: rna_fm registered but off（Deploy 默认态）。
-# Call（C4）已完成：夜间允许按需打开；本文件仅作「默认关闭」示例。
+# Example: rna_fm registered but off (Deploy default state).
+# Call (C4) done: overnight may enable on demand; this file is only the "default off" example.
 
 recipe_id: example_rna_fm_off
 fusion: concat

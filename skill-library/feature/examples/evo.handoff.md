@@ -1,31 +1,31 @@
-# evo handoff（S2b-Deploy + S2b-Call）
+# evo handoff (S2b-Deploy + S2b-Call)
 
 ## Status
 
-**Registered and overnight-callable.** Deploy + Call 完成；夜间可开关 `enabled`。默认仍 `false`。
+**Registered and overnight-callable.** Deploy + Call done; overnight may toggle `enabled`. Default remains `false`.
 
 | Item | Value |
 |------|--------|
 | Feature | `evo` |
 | Module | `features.builders.evo` |
 | Registry dim | 4096 |
-| Checkpoint | `evo-1-131k-base`（`tools/Evo/model`） |
+| Checkpoint | `evo-1-131k-base` (`tools/Evo/model`) |
 | Pilot recipe | `onehot` + `evo` → `input_dim=4100` |
-| Encode (HEK unique 9619 / 14410 rows) | ~506 s（含加载）；peak VRAM ~12.4 GB（C2） |
-| Train smoke (C3) | n=256, steps=40；encode≈98 s；val_RMSE≈0.276；peak_vram≈13.3 GB |
-| Overnight (C4) | **允许**开关 `evo.enabled`（与其它已注册 L4 相同；调参面仅为 `enabled`） |
-| Env | `myenv3.11`（需 `flash_attn`） |
-| Weight | `tools/Evo/model`（原目录硬链接） |
+| Encode (HEK unique 9619 / 14410 rows) | ~506 s (includes load); peak VRAM ~12.4 GB (C2) |
+| Train smoke (C3) | n=256, steps=40; encode≈98 s; val_RMSE≈0.276; peak_vram≈13.3 GB |
+| Overnight (C4) | **Allowed** to toggle `evo.enabled` (same as other registered L4; tunable surface is `enabled` only) |
+| Env | `myenv3.11` (requires `flash_attn`) |
+| Weight | `tools/Evo/model` (hardlinked from original dir) |
 
-## Agent 怎么用
+## How the agent uses this
 
-1. 只改 `features/active.yaml` 白名单：`features[].enabled`（及 `recipe_id` / `fusion`∈{concat,add,mean} / 可选 `fusion_include`；kmer `params.k`；`rna_fm` `params.repr_layer`）。  
-2. 可开/关 `evo`（`agent_tunable` 为 `[]`，不要写权重路径）。打开后 `input_dim` **+4096**；`train.py` 必须读 `data["input_dim"]`，建议降 batch。  
-3. 全量 encode 墙钟**不计入** `TIME_BUDGET=60s`，但仍挤占启动时间（HEK unique ~8–9 min，低于 36 min 墙）。显存常驻 ~12 GB。  
-4. `python train.py`；按 val_spearman keep/discard。  
-5. **禁止**改 builders / registry / 装包 / 下权重。
+1. Only change the `features/active.yaml` whitelist: `features[].enabled` (plus `recipe_id` / `fusion`∈{concat,add,mean} / optional `fusion_include`; kmer `params.k`; `rna_fm` `params.repr_layer`).  
+2. May enable/disable `evo` (`agent_tunable` is `[]`; do not write weight paths). When on, `input_dim` **+4096**; `train.py` must read `data["input_dim"]`; prefer smaller batch.  
+3. Full encode wall-clock **does not count** toward `TIME_BUDGET=60s`, but still consumes startup time (HEK unique ~8–9 min, under the 36 min wall). Resident VRAM ~12 GB.  
+4. `python train.py`; keep/discard by val_spearman.  
+5. **Do not** change builders / registry / install packages / download weights.
 
-规程：[agent-ops.md](../agent-ops.md)（含 L4 节）。
+Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section).
 
 ## Redo checks
 

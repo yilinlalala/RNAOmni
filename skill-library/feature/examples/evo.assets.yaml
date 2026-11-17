@@ -1,7 +1,7 @@
-# Evo L4 资产约定（encode-only vendor，代替 deploy_feature 流程）
+# Evo L4 asset contract (encode-only vendor; replaces deploy_feature flow)
 #
-# 代码/权重：tools/Evo（encode-only vendor copy of upstream Evo）。
-# 只认本地路径；禁止 hub 下载。
+# Code/weights: tools/Evo (encode-only vendor copy of upstream Evo).
+# Local paths only; no hub download.
 
 feature_name: evo
 layer: L4
@@ -16,7 +16,7 @@ conda_env: myenv3.11
 code_root: tools/Evo
 package_dir: evo
 
-# evo-1-131k-base hidden_size (registry.dim 以 D3 冒烟为准)
+# evo-1-131k-base hidden_size (registry.dim follows D3 smoke)
 expected_dim_doc: 4096
 
 # --- D3 smoke ---

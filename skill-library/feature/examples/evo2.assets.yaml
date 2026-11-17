@@ -1,7 +1,7 @@
-# Evo2 L4 资产约定（encode-only vendor）
+# Evo2 L4 asset contract (encode-only vendor)
 #
-# 代码/权重：tools/Evo2（从 evo2-main 复制编码所需部分）。
-# 只认本地路径；禁止 hub 下载。
+# Code/weights: tools/Evo2 (encode-needed parts copied from evo2-main).
+# Local paths only; no hub download.
 
 feature_name: evo2
 layer: L4

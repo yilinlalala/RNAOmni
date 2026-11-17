@@ -77,7 +77,7 @@ class Baseline(nn.Module):
             #self.backbone.apply(weights_init_classifier)
         for key in self.downstream_modules.keys():
             self.downstream_modules[key].apply(weights_init_kaiming)
-            self.downstream_modules[key].apply(weights_init_classifier)   # 最优 reduction这块还挺重要的
+            self.downstream_modules[key].apply(weights_init_classifier)   # reduction choice matters for best results
 
     #@autocast()
     def forward(self, data):

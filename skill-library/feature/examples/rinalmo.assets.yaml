@@ -1,9 +1,9 @@
-# S2b-Deploy：第二模 RiNALMo 资产约定（冻结）
+# S2b-Deploy: second-model RiNALMo asset contract (frozen)
 #
-# Deploy / 冒烟与注册必须读本文件。大权重不进 git。
-# 权重落点：官方 README Installation §3 → `{code_root}/weights/`
-# 本地优先：只解析已存在文件；禁止 gdown / Zenodo / hub 自动下载。
-# 规程对齐：skill-library/feature/deploy-ops.md（RNA-FM 同款竖切）
+# Deploy / smoke and registration must read this file. Large weights stay out of git.
+# Weight location: official README Installation §3 → `{code_root}/weights/`
+# Local-first: resolve only files that already exist; no gdown / Zenodo / hub auto-download.
+# Procedure aligned with: skill-library/feature/deploy-ops.md (same vertical slice as RNA-FM)
 
 feature_name: rinalmo
 layer: L4
@@ -16,20 +16,20 @@ agent_tunable: []
 conda_env: myenv3.11
 
 # Upstream code. Zero-install: PYTHONPATH=<code_root>
-# CLI override: --code-root /abs/path/to/RiNALMo  （一键部署传入参数）
+# CLI override: --code-root /abs/path/to/RiNALMo  (pass this for one-shot deploy)
 code_root: tools/RiNALMo
 package_dir: rinalmo
 
-# README pretrained scale → embed_dim（registry.dim 以冒烟为准）
+# README pretrained scale → embed_dim (registry.dim follows smoke)
 #   micro 35M → 480
 #   mega  150M → 640
 #   giga  650M → 1280
-# 默认解析策略：在 weight_candidates 中取【第一个已存在】的文件（列表已按体积从小到大排）。
+# Default resolve policy: first existing file in weight_candidates (list ordered small→large).
 default_weight_policy: smallest_present
 expected_dim_doc: 480
 lm_config: micro
 
-# --- D3 smoke（部署后填写）---
+# --- D3 smoke (fill after deploy) ---
 # Command: PYTHONPATH=<code_root> python tools/smoke_rinalmo.py --code-root <code_root>
 # Result: artifacts/pretrained/rinalmo/smoke_result.json
 smoke_status: pending
@@ -62,7 +62,7 @@ weight_candidates:
 # registry default_params keys locked at register time (D4)
 default_params_keys:
   - model_path   # absolute path of the resolved weight at register time
-  - lm_config    # micro | mega | giga；须与权重文件一致
+  - lm_config    # micro | mega | giga; must match the weight file
   - code_root
   - device       # e.g. cuda or cpu
   - use_flash_attn

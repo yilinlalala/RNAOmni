@@ -1,8 +1,8 @@
-# rinalmo handoff（S2b-Deploy + S2b-Call）
+# rinalmo handoff (S2b-Deploy + S2b-Call)
 
 ## Status
 
-**Registered and overnight-callable.** Deploy + Call smoke 完成；夜间可开关 `enabled`。
+**Registered and overnight-callable.** Deploy + Call smoke done; overnight may toggle `enabled`.
 
 | Item | Value |
 |------|--------|
@@ -11,20 +11,20 @@
 | Registry dim | 480 (micro) |
 | Pilot recipe | `onehot` + `rinalmo` → `input_dim=484` |
 | D3 / D4 | `SMOKE_OK` / `BUILDER_SMOKE_OK` |
-| C3 train smoke | n=256, steps=40；encode≈17s；val_RMSE≈0.34；peak_vram≈279 MB |
-| Overnight (C4) | **允许**开关 `rinalmo.enabled`（与其它已注册特征相同；调参面为 recipe `enabled`） |
+| C3 train smoke | n=256, steps=40; encode≈17s; val_RMSE≈0.34; peak_vram≈279 MB |
+| Overnight (C4) | **Allowed** to toggle `rinalmo.enabled` (same as other registered features; tunable surface is recipe `enabled`) |
 | Env | `myenv3.11` |
-| Weight | `tools/RiNALMo/weights/rinalmo_micro_pretrained.pt`（registry `default_params.model_path`） |
+| Weight | `tools/RiNALMo/weights/rinalmo_micro_pretrained.pt` (registry `default_params.model_path`) |
 
-## Agent 怎么用
+## How the agent uses this
 
-1. 只改 `features/active.yaml` 白名单：`features[].enabled`（及 `recipe_id` / `fusion`∈{concat,add,mean} / 可选 `fusion_include`；kmer `params.k`；`rna_fm` `params.repr_layer`）。  
-2. 可开/关 `rinalmo`（`agent_tunable` 仍为 `[]`，不要写 `lm_config`）；常见搭配 `onehot`（注意 `input_dim`；全量 encode 墙钟长、不计入 `TIME_BUDGET`）。  
-3. `train.py` 必须读 `data["input_dim"]`；大通道时可改结构/batch。  
-4. `python train.py`；按 val_spearman keep/discard。  
-5. **禁止**改 builders / registry / 装包 / 下权重。
+1. Only change the `features/active.yaml` whitelist: `features[].enabled` (plus `recipe_id` / `fusion`∈{concat,add,mean} / optional `fusion_include`; kmer `params.k`; `rna_fm` `params.repr_layer`).  
+2. May enable/disable `rinalmo` (`agent_tunable` stays `[]`; do not write `lm_config`); common pairing is `onehot` (watch `input_dim`; full encode wall-clock is long and does not count toward `TIME_BUDGET`).  
+3. `train.py` must read `data["input_dim"]`; for wide channels, adjust architecture/batch.  
+4. `python train.py`; keep/discard by val_spearman.  
+5. **Do not** change builders / registry / install packages / download weights.
 
-规程：[agent-ops.md](../agent-ops.md)（含 L4 节）。SSOT：todolist §8.1。
+Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section). SSOT: todolist §8.1.
 
 ## Redo checks
 

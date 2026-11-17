@@ -81,7 +81,7 @@ def main() -> int:
     assert parsed_feat["cause"] is None
     assert orch.infer_cause(parsed_feat, "keep") == "feature"
     parsed_sample = orch.parse_round_kind(
-        "[sample] 数据采样到 ×2（K_train 10->20，K_eval=10，kept=yes）"
+        "[sample] data sampled to ×2 (K_train 10->20, K_eval=10, kept=yes)"
     )
     assert orch.infer_cause(parsed_sample, "keep") == "sample"
     crash_p = orch.parse_round_kind("[model] framework=baseline boom")
