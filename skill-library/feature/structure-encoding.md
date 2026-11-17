@@ -1,10 +1,8 @@
 # L3 structure encoding (ViennaRNA descriptors)
 
-> Under `rnaomni-feature`.  
-> **Agent open:** all three are already in `features/registry.yaml` and `features/active.yaml`; overnight may change `enabled` via the whitelist (no separate `agent_open` field).  
-> Env: `myenv3.11` (`import RNA` / ViennaRNA). Does not depend on CLI `RNAfold`.  
-> Stage status: [`../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md`](../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md).
-
+> Under `rnaomni-feature`. 
+> **Agent open:** all three are already in `features/registry.yaml` and `features/active.yaml`; overnight may change `enabled` via the whitelist (no separate `agent_open` field). 
+> Env: `myenv3.11` (`import RNA` / ViennaRNA). Does not depend on CLI `RNAfold`.
 ## Information → channels
 
 | Registry name | Information | Shape convention | dim | agent |
@@ -17,9 +15,9 @@ Shared impl: `features/builders/_vienna.py` (`fold_sequence` + in-process LRU; m
 
 ## Listing and open status
 
-- `features/registry.yaml`: `layer: L3`, `deps: [ViennaRNA]`, `cost: medium`, `agent_tunable: []` (tuning surface is recipe `enabled`)  
-- `features/active.yaml`: all three listed; defaults are mostly `false`, **agent may turn them on**  
-- Agent **must not** install packages; deps must already be preinstalled in the env  
+- `features/registry.yaml`: `layer: L3`, `deps: [ViennaRNA]`, `cost: medium`, `agent_tunable: []` (tuning surface is recipe `enabled`) 
+- `features/active.yaml`: all three listed; defaults are mostly `false`, **agent may turn them on** 
+- Agent **must not** install packages; deps must already be preinstalled in the env 
 
 ## Overnight usage
 

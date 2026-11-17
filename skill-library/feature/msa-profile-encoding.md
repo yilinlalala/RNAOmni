@@ -1,9 +1,7 @@
 # MSA profile encoding (dataset-bound)
 
-> **Status (2026-07-25): incomplete.** builder + `tools/msa_search/` + recipe placeholder rows exist; **not yet** written to `features/registry.yaml` → turning on `enabled` raises `KeyError`. HEK full hits/profiles not covered. Local search DB as production default remains deferred.  
-> Human-controlled precompute; agent **must not** toggle `msa_profile` for now. Stage: [`../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md`](../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md).
-
-## Dataset / dual backend
+> **Status (2026-07-25): incomplete.** builder + `tools/msa_search/` + recipe placeholder rows exist; **not yet** written to `features/registry.yaml` → turning on `enabled` raises `KeyError`. HEK full hits/profiles not covered. Local search DB as production default remains deferred. 
+> Human-controlled precompute; agent **must not** toggle `msa_profile` for now. ## Dataset / dual backend
 
 | Concept | Rule |
 |------|------|
@@ -17,8 +15,8 @@ Local install and download: **[MANUAL_SETUP_LOCAL.md](../../tools/msa_search/MAN
 
 ## Required before closing the loop
 
-1. Register `msa_profile` in `features/registry.yaml` (dim=6, module, `default_params`).  
-2. Human-run precompute for the current `ACTIVE_CSV` to completion (hits + profiles).  
+1. Register `msa_profile` in `features/registry.yaml` (dim=6, module, `default_params`). 
+2. Human-run precompute for the current `ACTIVE_CSV` to completion (hits + profiles). 
 3. Smoke-train through, then open overnight in handoff/procedure.
 
 ## Flow (after listing is complete)
@@ -34,6 +32,6 @@ python tools/msa_search/run_precompute.py --csv <active>.csv --stage all
 
 ## Red lines
 
-- Agent does not run precompute or change builder source.  
-- Missing profile → builder-side `missing: zeros` (after listing loop is closed).  
+- Agent does not run precompute or change builder source. 
+- Missing profile → builder-side `missing: zeros` (after listing loop is closed). 
 - Different CSVs **must not** share the same `artifacts/msa/<id>/` (unless you confirm the sequence set is identical and intend that).

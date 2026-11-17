@@ -18,10 +18,10 @@
 
 ## How the agent uses this
 
-1. Only change the `features/active.yaml` whitelist: `features[].enabled` (plus `recipe_id` / `fusion`∈{concat,add,mean} / optional `fusion_include`; kmer `params.k`; `rna_fm` `params.repr_layer` 0–12).  
-2. May enable/disable `rna_fm`; may tune `repr_layer` (default 12); optional pairing with `onehot` / `length_frac` / `kmer` (watch `input_dim`).  
-3. `train.py` must read `data["input_dim"]`; for wide channels, adjust architecture/batch.  
-4. `python train.py`; keep/discard by val_spearman.  
+1. Only change the `features/active.yaml` whitelist: `features[].enabled` (plus `recipe_id` / `fusion`∈{concat,add,mean} / optional `fusion_include`; kmer `params.k`; `rna_fm` `params.repr_layer` 0–12). 
+2. May enable/disable `rna_fm`; may tune `repr_layer` (default 12); optional pairing with `onehot` / `length_frac` / `kmer` (watch `input_dim`). 
+3. `train.py` must read `data["input_dim"]`; for wide channels, adjust architecture/batch. 
+4. `python train.py`; keep/discard by val_spearman. 
 5. **Do not** change builders / registry / install packages / download weights.
 
 Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section). SSOT: todolist §8.1.

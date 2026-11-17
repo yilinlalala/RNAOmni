@@ -1,9 +1,7 @@
 # Registry / recipe field conventions (S1 frozen)
 
-> Decision: recipe **minimal whitelist**; acceptance **B** (`length_frac` second channel); `prepare.py` / `rnaomni/prepare/` orchestration is human-only.  
-> Encoding: train / `load_prepared_data` **compute on the fly** (no on-disk feature cache / fingerprint).  
-> Stage status: [`../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md`](../../devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md).
-
+> Decision: recipe **minimal whitelist**; acceptance **B** (`length_frac` second channel); `prepare.py` / `rnaomni/prepare/` orchestration is human-only. 
+> Encoding: train / `load_prepared_data` **compute on the fly** (no on-disk feature cache / fingerprint).
 ## Files
 
 | File | Maintainer | Notes |
@@ -33,25 +31,25 @@ Forbidden to change: builder code, `features/registry.yaml`, `default_params`, d
 
 ```yaml
 recipe_id: s3_l0_length_frac_kmer
-fusion: concat          # concat | add | mean
-# fusion_include: [onehot, kmer]   # optional; omit = all enabled
+fusion: concat # concat | add | mean
+# fusion_include: [onehot, kmer] # optional; omit = all enabled
 features:
-  - name: onehot
-    enabled: true
-  - name: length_frac
-    enabled: true
-  - name: kmer
-    enabled: true
-    params:
-      k: 4              # optional; omit → registry default k=3 (64-d)
-  - name: rna_fm
-    enabled: false
-    # params:
-    #   repr_layer: 12   # optional; rna_fm only, 0–12
+ - name: onehot
+ enabled: true
+ - name: length_frac
+ enabled: true
+ - name: kmer
+ enabled: true
+ params:
+ k: 4 # optional; omit → registry default k=3 (64-d)
+ - name: rna_fm
+ enabled: false
+ # params:
+ # repr_layer: 12 # optional; rna_fm only, 0–12
 ```
 
-Acceptance B (historical): set `length_frac.enabled` to `true` → `input_dim` from 4→5.  
-Default L0+L1+L2 concat, k=3 → `input_dim=69`. k=2 → kmer C=16; k=4 → 256. registry kmer `dim: 64` only documents default k=3; encode uses the computed C.  
+Acceptance B (historical): set `length_frac.enabled` to `true` → `input_dim` from 4→5. 
+Default L0+L1+L2 concat, k=3 → `input_dim=69`. k=2 → kmer C=16; k=4 → 256. registry kmer `dim: 64` only documents default k=3; encode uses the computed C. 
 `fusion_include: [onehot, kmer]` with k=3 → `input_dim=68` (does not include `length_frac`).
 
 **Note:** A name present in the recipe but not in the registry with `enabled: true` → `KeyError`. MSA is ignored in this version; do not put it in the recipe.
@@ -80,7 +78,7 @@ Common extra L4 `default_params`: `model_path`, `device`, (RNA-FM) `repr_layer`,
 
 ```python
 def build(sequences, *, max_len: int, alphabet: str = "ACGU", params=None) -> np.ndarray:
-    # returns (N, max_len, dim) float32
+ # returns (N, max_len, dim) float32
 ```
 
 `dim` must match the builder output's last dimension. kmer registry `dim: 64` is the default k=3 documentation value; encode computes `4^k` from `params.k`—do not gate other k values on the static 64.

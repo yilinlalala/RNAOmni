@@ -18,10 +18,10 @@
 
 ## How the agent uses this
 
-1. Only change the `features/active.yaml` whitelist: `features[].enabled` (plus `recipe_id` / `fusion`∈{concat,add,mean} / optional `fusion_include`; kmer `params.k`; `rna_fm` `params.repr_layer`).  
-2. May enable/disable `rinalmo` (`agent_tunable` stays `[]`; do not write `lm_config`); common pairing is `onehot` (watch `input_dim`; full encode wall-clock is long and does not count toward `TIME_BUDGET`).  
-3. `train.py` must read `data["input_dim"]`; for wide channels, adjust architecture/batch.  
-4. `python train.py`; keep/discard by val_spearman.  
+1. Only change the `features/active.yaml` whitelist: `features[].enabled` (plus `recipe_id` / `fusion`∈{concat,add,mean} / optional `fusion_include`; kmer `params.k`; `rna_fm` `params.repr_layer`). 
+2. May enable/disable `rinalmo` (`agent_tunable` stays `[]`; do not write `lm_config`); common pairing is `onehot` (watch `input_dim`; full encode wall-clock is long and does not count toward `TIME_BUDGET`). 
+3. `train.py` must read `data["input_dim"]`; for wide channels, adjust architecture/batch. 
+4. `python train.py`; keep/discard by val_spearman. 
 5. **Do not** change builders / registry / install packages / download weights.
 
 Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section). SSOT: todolist §8.1.

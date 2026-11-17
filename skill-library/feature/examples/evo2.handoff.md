@@ -19,10 +19,10 @@
 
 ## How the agent uses this
 
-1. Only change the `features/active.yaml` whitelist: `features[].enabled` (plus `recipe_id` / `fusion`∈{concat,add,mean} / optional `fusion_include`; kmer `params.k`; `rna_fm` `params.repr_layer`).  
-2. May enable/disable `evo2` (`agent_tunable` is `[]`; do not write weight paths). When on, `input_dim` **+4096**; `train.py` must read `data["input_dim"]`; prefer smaller batch.  
-3. Full encode wall-clock **does not count** toward `TIME_BUDGET=60s`, but still consumes startup time (HEK unique ~7 min, under the 36 min wall). Resident VRAM ~12–13 GB.  
-4. `python train.py`; keep/discard by val_spearman.  
+1. Only change the `features/active.yaml` whitelist: `features[].enabled` (plus `recipe_id` / `fusion`∈{concat,add,mean} / optional `fusion_include`; kmer `params.k`; `rna_fm` `params.repr_layer`). 
+2. May enable/disable `evo2` (`agent_tunable` is `[]`; do not write weight paths). When on, `input_dim` **+4096**; `train.py` must read `data["input_dim"]`; prefer smaller batch. 
+3. Full encode wall-clock **does not count** toward `TIME_BUDGET=60s`, but still consumes startup time (HEK unique ~7 min, under the 36 min wall). Resident VRAM ~12–13 GB. 
+4. `python train.py`; keep/discard by val_spearman. 
 5. **Do not** change builders / registry / install packages / download weights.
 
 Procedure: [agent-ops.md](../agent-ops.md) (includes L4 section).
