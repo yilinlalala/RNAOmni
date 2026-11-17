@@ -4,181 +4,49 @@ An end-to-end autonomous modeling agent for RNA downstream prediction tasks.
 
 Building strong RNA models still needs heavy manual design. AutoML mostly tunes hyperparameters in fixed spaces, and LLM agents often rely on human blueprints. **RNAOmni** starts from raw data and jointly searches data processing, features, backbones, and hyperparameters (*Direct* / *Thinking* modes). On **17** tasks, it gains **59.50%** over AutoML and **18.4%** over AI research agents on average.
 
-Research training loop (adapted from [autoresearch](https://github.com/karpathy/autoresearch)): edit `program.md`; the agent edits `train.py`. No inference CLI/API yet.
-
-## Task
+Research loop (adapted from [autoresearch](https://github.com/karpathy/autoresearch)): edit `program.md`; the agent edits `train.py`. No inference CLI/API yet.
 
 | | |
 | --- | --- |
-| **Input** | RNA nucleotide sequence |
-| **Output** | Continuous value or class label |
-| **Decision metric** | `val_spearman` (regression) or `val_accuracy` (classification), higher is better |
-| **Time budget** | `TIME_BUDGET` wall-clock training per run (default **300s** in `rnaomni.env`; encode/startup excluded) |
-
-Demo CSV: `dataset/HEK_te_prediction_task.csv`.
-
-## How it works
-
-| File | Role |
-| --- | --- |
-| `prepare.py` | Data load, encoding, evaluation — **do not modify** |
-| `train.py` | Model + training loop — **agent edits this** |
-| `program.md` | Agent protocol — **you edit this** |
-| `rnaomni.env` | Default config table — agent must not edit; optional `.env` overlay |
+| **Input / output** | RNA sequence → regression or classification label |
+| **Decision metric** | `val_spearman` or `val_accuracy` (higher better) |
+| **Time budget** | `TIME_BUDGET` (default 300s in `rnaomni.env`; encode excluded) |
+| **Core files** | `prepare.py` (fixed) · `train.py` (agent) · `program.md` (you) · `rnaomni.env` |
 
 ## Quick start
 
-**Requirements:** one NVIDIA GPU; Python 3.11; PyTorch (CUDA); NumPy; PyYAML. Conda env name is `RNAOMNI_CONDA_ENV` in `rnaomni.env` (default `myenv3.11`). Structure features need ViennaRNA; classification splits may need `mmseqs`.
-
-Default recipe (`features/active.yaml`) is **`onehot_only`** — no pretrained weights required.
+**Needs:** 1× NVIDIA GPU, Python 3.11, PyTorch (CUDA), NumPy, PyYAML. Conda env = `RNAOMNI_CONDA_ENV` (default `myenv3.11`). Optional: ViennaRNA (`struct_*`), `mmseqs` (classification splits). Default recipe is **`onehot_only`** (no weights).
 
 ```bash
-conda activate myenv3.11   # must match RNAOMNI_CONDA_ENV
-
-python prepare.py          # one-time data prep (demo CSV included)
-python train.py            # one experiment (default TIME_BUDGET=300s)
-
-# shorter smoke run
-TIME_BUDGET=60 python train.py
-```
-
-Check metrics at the end of the run, or:
-
-```bash
+conda activate myenv3.11
+python prepare.py                 # demo: dataset/HEK_te_prediction_task.csv
+python train.py                   # or: TIME_BUDGET=60 python train.py
 grep -E '^val_spearman:|^test_RMSE:' workspace/run.log
-```
 
-Example summary:
-
-```
----
-val_spearman:     0.229061
-test_RMSE:        1.000536
-test_R2:          0.108261
-test_spearman:    0.340659
-test_pearson:     0.361309
-training_seconds: 56.6
-peak_vram_mb:     101.0
-```
-
-### Custom data
-
-```bash
-# CSV under dataset/ (columns: input_seq, label/target)
+# custom CSV / pre-split
 python prepare.py --csv your_file.csv
-python train.py
-
-# External train/val/test CSVs
 python prepare.py --compare-root /path/to/task
-python train.py
-```
 
-### Overnight agent search
-
-```bash
+# overnight search (API keys in .env only)
 python orchestrator.py
 ```
 
-Backend: `AGENT_BACKEND` in `rnaomni.env`. Put API keys in `.env` only (gitignored).
+Outputs: `workspace/<stem>.tsv`, `workspace/run.log`, archives under `workspace/runs/`.
 
-Point a coding agent at the repo:
+## Optional pretrained weights
 
-```
-Hi, have a look at program.md and let's kick off a new experiment! Let's do the setup first.
-```
+Place under `tools/*/`, then enable in `features/active.yaml`. See each `WEIGHTS.md`.
 
-## Pretrained weights (optional)
+| Feature | Path | Download |
+| --- | --- | --- |
+| Evo2 (~13GB) | `tools/Evo2/weights/evo2_7b.pt` | [HF arcinstitute/evo2_7b](https://huggingface.co/arcinstitute/evo2_7b) |
+| Evo (~13GB) | `tools/Evo/model/` | [HF togethercomputer/evo-1-131k-base](https://huggingface.co/togethercomputer/evo-1-131k-base) |
+| RNA-FM (~1.2GB) | `tools/RNA-FM/pretrained/RNA-FM_pretrained.pth` | [CUHK RNA-FM](https://proj.cse.cuhk.edu.hk/rnafm/api/download?filename=RNA-FM_pretrained.pth) |
+| RiNALMo micro (~128MB) | `tools/RiNALMo/weights/rinalmo_micro_pretrained.pt` | [Zenodo](https://zenodo.org/records/15043668) |
 
-Download only the features you enable. Paths are relative to the repo root. See each directory `WEIGHTS.md` / `PLACEHOLDER.md`. Binary weights are gitignored.
-
-### Evo2 (~13GB)
-
-Destination: `tools/Evo2/weights/evo2_7b.pt`
-
-```bash
-mkdir -p tools/Evo2/weights
-huggingface-cli download arcinstitute/evo2_7b evo2_7b.pt --local-dir tools/Evo2/weights
-```
-
-https://huggingface.co/arcinstitute/evo2_7b
-
-### Evo (~13GB)
-
-Destination: `tools/Evo/model/` (full Hugging Face model directory)
-
-```bash
-mkdir -p tools/Evo/model
-huggingface-cli download togethercomputer/evo-1-131k-base --local-dir tools/Evo/model
-```
-
-https://huggingface.co/togethercomputer/evo-1-131k-base
-
-### RNA-FM (~1.2GB)
-
-Destination: `tools/RNA-FM/pretrained/RNA-FM_pretrained.pth`
-
-```bash
-mkdir -p tools/RNA-FM/pretrained
-wget -O tools/RNA-FM/pretrained/RNA-FM_pretrained.pth \
-  "https://proj.cse.cuhk.edu.hk/rnafm/api/download?filename=RNA-FM_pretrained.pth"
-```
-
-### RiNALMo (micro ~128MB)
-
-Destination: `tools/RiNALMo/weights/rinalmo_micro_pretrained.pt`
-
-```bash
-mkdir -p tools/RiNALMo/weights
-wget -O tools/RiNALMo/weights/rinalmo_micro_pretrained.pt \
-  "https://zenodo.org/records/15043668/files/rinalmo_micro_pretrained.pt"
-```
-
-https://zenodo.org/records/15043668
-
-After placing weights, enable the feature in `features/active.yaml` (and disable `onehot` if desired). `evo` / `evo2` also need `transformers` and `flash_attn`. Features without weights: `onehot`, `length_frac`, `kmer`. Structure features (`struct_*`) need a local ViennaRNA install.
-
-## Outputs
-
-Runtime outputs go under **`workspace/`** (gitignored):
-
-| Path | Contents |
-| --- | --- |
-| `workspace/<dataset_stem>.tsv` | Search / experiment log (tab-separated) |
-| `workspace/run.log` | Latest training log |
-| `workspace/runs/` | Archived campaigns (`results.tsv`, `active.yaml`, `meta.json`, …) |
-| `artifacts/` | Prep caches (data cards, splits) |
-
-## Project layout
-
-```
-dataset/          demo CSV
-features/         active recipe + feature builders
-rnaomni/          prepare helpers, orchestrator, parallel, finalize
-tools/            optional encoders (Evo2, RNA-FM, …)
-skill-library/    agent skill docs for features
-workspace/        runtime outputs (gitignored)
-artifacts/        prep caches (gitignored)
-prepare.py
-train.py
-orchestrator.py
-program.md
-rnaomni.env
-```
-
-## Design choices
-
-- **One editable training file** — agent only changes `train.py`.
-- **Fixed time budget** — comparable runs across architectures on the same GPU.
-- **Fixed evaluation** — keep/discard uses the metric from `prepare.py`.
-- **Simplicity** — equal metric with simpler code wins (see `program.md`).
-
-## Platform
-
-Single NVIDIA GPU + CUDA. On smaller GPUs, reduce depth / sequence length / batch size in `train.py` (or ask the agent to tune them).
+`evo` / `evo2` need `transformers` + `flash_attn`. No weights: `onehot`, `length_frac`, `kmer`.
 
 ## Citation
-
-If you use RNAOmni, please cite:
 
 > Yilin Yan, Ruihao Xia, Honglin Li, Yang Tang, Feng Qian.  
 > **RNAOmni: An Autonomous Modeling Agent for RNA Downstream Tasks**.
@@ -193,6 +61,4 @@ If you use RNAOmni, please cite:
 
 ## License
 
-[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). See [`LICENSE`](LICENSE).
-
-Third-party code under `tools/` keeps its upstream licenses (see each subdirectory).
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — see [`LICENSE`](LICENSE). Third-party code under `tools/` keeps upstream licenses.
