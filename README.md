@@ -132,6 +132,21 @@ rnaomni.env
 
 Single NVIDIA GPU + CUDA. On smaller GPUs, reduce depth / sequence length / batch size in `train.py` (or ask the agent to tune them).
 
+## Citation
+
+If you use RNAOmni, please cite:
+
+> Yilin Yan, Ruihao Xia, Honglin Li, Yang Tang, Feng Qian.  
+> **RNAOmni: An Autonomous Modeling Agent for RNA Downstream Tasks**.
+
+```bibtex
+@article{yan2026rnaomni,
+  title   = {RNAOmni: An Autonomous Modeling Agent for RNA Downstream Tasks},
+  author  = {Yan, Yilin and Xia, Ruihao and Li, Honglin and Tang, Yang and Qian, Feng},
+  year    = {2026}
+}
+```
+
 ## License
 
 [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). See [`LICENSE`](LICENSE).
