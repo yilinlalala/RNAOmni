@@ -1,10 +1,12 @@
 # RNAOmni
 
-Autonomous research framework for **RNA sequence modeling**.
+An end-to-end autonomous modeling agent for RNA downstream prediction tasks.
 
-RNAOmni trains models that map an RNA sequence to a biological label — **regression** (continuous) or **classification** (discrete). An AI coding agent iterates overnight: it edits training code, runs a fixed-time experiment, keeps improvements, and discards the rest. You get an experiment log and (hopefully) a stronger model. This is a **research** loop; there is no inference CLI/API for new sequences yet.
+RNA property prediction and functional identification remain a key frontier at the intersection of AI and biology, yet building strong task-specific models still depends on labor-intensive design, validation, and refinement. Domain experts often have rich data but limited engineering bandwidth, while AI researchers have strong modeling skills but struggle to cover diverse biological needs. Existing AutoML tools mainly tune hyperparameters in fixed search spaces, and LLM-based agents still rely on human-provided blueprints—neither delivers full automation from data to model.
 
-Workflow adapted from [autoresearch](https://github.com/karpathy/autoresearch): you mainly edit `program.md` (agent instructions); the agent modifies `train.py`.
+**RNAOmni** addresses this gap by mimicking expert decision-making: from raw data alone, it jointly explores data processing, feature representations, model backbones, and hyperparameters. It supports *Direct* and *Thinking* modes; the latter uses an attribution probe to identify modeling weaknesses and guide search. Across **17** RNA downstream tasks, RNAOmni achieves average relative gains of **59.50%** over AutoML and **18.4%** over AI research agents, consistently surpassing domain-specific RNA models and further improving the utility of RNA foundation models.
+
+This repository is a **research** training loop (adapted from [autoresearch](https://github.com/karpathy/autoresearch)): you mainly edit `program.md`; the agent modifies `train.py`. There is no inference CLI/API for new sequences yet.
 
 ## Task
 
