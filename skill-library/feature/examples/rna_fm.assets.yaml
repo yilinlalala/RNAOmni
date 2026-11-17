@@ -1,7 +1,6 @@
 # S2b-Deploy D1: first-model RNA-FM asset contract (frozen)
 #
 # Deploy / D3+ smoke and registration must read this file. Weights live under tools/RNA-FM/pretrained/.
-# SSOT plan: devlog/20260719_000000_feature_skill_PLAN_PARTIAL.md
 # Procedure: skill-library/feature/deploy-ops.md
 
 feature_name: rna_fm

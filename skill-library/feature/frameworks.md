@@ -31,12 +31,12 @@ A switch first shot inherits `WIDTH=HIDDEN_DIM` and the training knobs above. Do
 ## Tensor path (every named head)
 
 ```
-x (B, L, C) C = data["input_dim"] — never hardcode 4/69/266/532
- → stem to WIDTH WIDTH = HIDDEN_DIM; identity if C == WIDTH
- → blocks at WIDTH
- → masked pool (B, pool_dim)
- → MLP Linear(pool_dim, WIDTH) → … → num_outputs
- num_outputs = 1 or data["num_classes"]
+x (B, L, C)                 C = data["input_dim"]  — never hardcode 4/69/266/532
+  → stem to WIDTH           WIDTH = HIDDEN_DIM; identity if C == WIDTH
+  → blocks at WIDTH
+  → masked pool             (B, pool_dim)
+  → MLP                     Linear(pool_dim, WIDTH) → … → num_outputs
+                             num_outputs = 1 or data["num_classes"]
 ```
 
 `forward(self, x, lengths)` must return `(B,)` if `num_outputs==1` else `(B, num_outputs)`.
@@ -64,9 +64,9 @@ Head first layer: `Linear(pool_dim, WIDTH)` (or `Linear(WIDTH, num_outputs)` for
 
 ```python
 class AttnPoolMLP(nn.Module):
- ...
+    ...
 
-Predictor = AttnPoolMLP # overnight / finalize instantiate this name
+Predictor = AttnPoolMLP   # overnight / finalize instantiate this name
 ```
 
 Keep the old class around if you want, but training and finalize use `Predictor`. Constructor should accept `input_dim`, `hidden_dim`, `dropout`, `num_outputs`. Do not require `conv_channels` on non-`pool_mlp` heads. Menu name → class is in `train.py` (see switch-round list above).
