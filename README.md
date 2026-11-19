@@ -54,7 +54,7 @@ Place under `tools/*/`, then enable in `features/active.yaml`. See each `WEIGHTS
 ```bibtex
 @article{yan2026rnaomni,
   title   = {RNAOmni: An Autonomous Modeling Agent for RNA Downstream Tasks},
-  author  = {Yan, Yilin and Xia, Ruihao and Li, Honglin and Tang, Yang and Qian, Feng},
+  author  = {Yilin Yan and Ruihao Xia and Honglin Li and Yang Tang and Feng Qian},
   year    = {2026}
 }
 ```
