@@ -41,7 +41,7 @@ Place under `tools/*/`, then enable in `features/active.yaml`. See each `WEIGHTS
 | --- | --- | --- |
 | Evo2 (~13GB) | `tools/Evo2/weights/evo2_7b.pt` | [HF arcinstitute/evo2_7b](https://huggingface.co/arcinstitute/evo2_7b) |
 | Evo (~13GB) | `tools/Evo/model/` | [HF togethercomputer/evo-1-131k-base](https://huggingface.co/togethercomputer/evo-1-131k-base) |
-| RNA-FM (~1.2GB) | `tools/RNA-FM/pretrained/RNA-FM_pretrained.pth` | [CUHK RNA-FM](https://proj.cse.cuhk.edu.hk/rnafm/api/download?filename=RNA-FM_pretrained.pth) |
+| RNA-FM (~1.2GB) | `tools/RNA-FM/pretrained/RNA-FM_pretrained.pth` | [CUHK RNA-FM](https://github.com/ml4bio/RNA-FM) |
 | RiNALMo micro (~128MB) | `tools/RiNALMo/weights/rinalmo_micro_pretrained.pt` | [Zenodo](https://zenodo.org/records/15043668) |
 
 `evo` / `evo2` need `transformers` + `flash_attn`. No weights: `onehot`, `length_frac`, `kmer`.
